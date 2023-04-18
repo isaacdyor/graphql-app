@@ -1,0 +1,33 @@
+  type Query {
+    getBoards: [Board]
+  }
+
+  type Mutation {
+    createBoard(input: CreateInput!) : Board
+    updateBoard(input: UpdateInput!) : Board
+    deleteBoard(input: DeleteInput!) : Board
+  }
+
+  input CreateInput {
+    title: String!
+    description: String!
+    path: String!
+  }
+
+  input UpdateInput {
+    id: ID!
+    title: String!
+    description: String!
+    path: String!
+  }
+
+  input DeleteInput {
+    id: ID!
+  }
+
+  type Board {
+    id: ID!
+    title: String!
+    description: String!
+    path: String!
+  }
