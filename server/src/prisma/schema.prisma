@@ -18,3 +18,22 @@ model Board {
   description String?
   path        String    
 }
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String   @unique
+  password  String
+  posts     Post[]
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  description   String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String @unique
+}

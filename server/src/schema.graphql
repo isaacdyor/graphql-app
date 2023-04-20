@@ -1,33 +1,60 @@
-  type Query {
-    getBoards: [Board]
-  }
+type Query {
+  getBoards: [Board]
+  getUsers: [User]
+  getUser(id: ID!): User
+  getPosts: [Post]
+  getPost(id: ID!): Post
+}
 
-  type Mutation {
-    createBoard(input: CreateInput!) : Board
-    updateBoard(input: UpdateInput!) : Board
-    deleteBoard(input: DeleteInput!) : Board
-  }
+type Mutation {
+  createBoard(input: CreateBoardInput!) : Board
+  updateBoard(input: UpdateBoardInput!) : Board
+  deleteBoard(input: DeleteBoardInput!) : Board
+  createPost(input: CreatePostInput!) : Post
+}
 
-  input CreateInput {
-    title: String!
-    description: String!
-    path: String!
-  }
+input CreateBoardInput {
+  title: String!
+  description: String!
+  path: String!
+}
 
-  input UpdateInput {
-    id: ID!
-    title: String!
-    description: String!
-    path: String!
-  }
+input UpdateBoardInput {
+  id: ID!
+  title: String!
+  description: String!
+  path: String!
+}
 
-  input DeleteInput {
-    id: ID!
-  }
+input DeleteBoardInput {
+  id: ID!
+}
 
-  type Board {
-    id: ID!
-    title: String!
-    description: String!
-    path: String!
-  }
+input CreatePostInput {
+  title: String!
+  description: String!
+  authorId: ID!
+}
+
+
+type Board {
+  id: ID!
+  title: String!
+  description: String!
+  path: String!
+}
+
+type User {
+  id: ID!
+  email: String!
+  password: String!
+  posts: [Post]!
+}
+
+type Post {
+  id: ID!
+  title: String!
+  description: String!
+  author: User!
+  authorId: ID!
+}

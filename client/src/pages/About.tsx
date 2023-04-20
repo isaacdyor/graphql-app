@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 
 
-function AboutPage(): JSX.Element {
+const AboutPage: React.FC = () => {
 
 	const [message, setMessage] = useState('');
 	const { id } = useParams();

@@ -10,7 +10,41 @@ const resolvers = {
   Query: {
     getBoards: () => {
       return prisma.board.findMany()
-    }
+    },
+    getPosts: () => {
+      return prisma.post.findMany({
+        include: {
+          author: true,
+        },
+      })
+    },
+    getUsers: () => {
+      return prisma.user.findMany({
+        include: {
+          posts: true,
+        },
+      })
+    },
+    getUser: (_: any, { id } : { id: string} ) => {
+      return prisma.user.findUnique({
+        where: {
+          id: id,
+        },
+        include: {
+          posts: true,
+        },
+      });
+    },
+    getPost: (_: any, { id } : { id: string} ) => {
+      return prisma.post.findUnique({
+        where: {
+          id: id,
+        },
+        include: {
+          author: true,
+        },
+      });
+    },
   },
   Mutation: {
     createBoard: (_: any, { input } : any ) => {
@@ -38,6 +72,15 @@ const resolvers = {
       return prisma.board.delete({
         where: {
           id: input.id,
+        },
+      });
+    },
+    createPost: (_: any, { input } : any ) => {
+      return prisma.post.create({
+        data: {
+          title: input.title,
+          description: input.description,
+          author: { connect: { id: input.authorId } },
         },
       });
     },
